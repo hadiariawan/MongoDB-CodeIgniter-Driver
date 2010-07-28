@@ -1,0 +1,9 @@
+====================================================================================================
+	GETTING STARTED
+====================================================================================================
+
+1.  Add the mongo_db.php config file to your ./system/application/config directory and make the 
+		appropriate changes to connect to your database
+
+2.	Copy the Mongo_db.php library file to your ./system/application/libraries directory
+3.	(optional) Add the library to your autoload.php file if you plan to frequently reference the library

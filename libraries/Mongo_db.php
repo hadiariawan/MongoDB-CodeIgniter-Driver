@@ -11,7 +11,7 @@
  * @copyright	Copyright (c) 2010, Kyle J. Dye.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://kyledye.com
- * @version		Version 0.1
+ * @version		Version 0.2
  */
 
 class Mongo_db {
@@ -415,7 +415,7 @@ class Mongo_db {
 	 public function insert($collection = "", $data = array()) {
 	 	if(empty($collection))
 	 		show_error("No Mongo collection selected to insert into", 500);
-	 	if(count($insert) == 0 || !is_array($insert))
+	 	if(count($data) == 0 || !is_array($data))
 	 		show_error("Nothing to insert into Mongo collection or insert is not an array", 500);
 	 	
 	 	try {
@@ -440,7 +440,7 @@ class Mongo_db {
 	 public function update($collection = "", $data = array()) {
 	 	if(empty($collection))
 	 		show_error("No Mongo collection selected to update", 500);
-	 	if(count($insert) == 0 || !is_array($insert))
+	 	if(count($data) == 0 || !is_array($data))
 	 		show_error("Nothing to update in Mongo collection or update is not an array", 500);
 	 	
 	 	try {
@@ -465,7 +465,7 @@ class Mongo_db {
 	 public function update_all($collection = "", $data = array()) {
 	 	if(empty($collection))
 	 		show_error("No Mongo collection selected to update", 500);
-	 	if(count($insert) == 0 || !is_array($insert))
+	 	if(count($data) == 0 || !is_array($data))
 	 		show_error("Nothing to update in Mongo collection or update is not an array", 500);
 	 	try {
 	 		$this->db->{$collection}->update($this->wheres, array('$set' => $data), array('safe' => TRUE, 'multiple' => TRUE));

@@ -58,6 +58,26 @@ class Mongo_db {
 	
 	/**
 	 *	--------------------------------------------------------------------------------
+	 *	Switch_db
+	 *	--------------------------------------------------------------------------------
+	 *
+	 *	Switch from default database to a different db
+	 */
+	
+	public function switch_db($database = '') {
+		if(empty($database)):
+			show_error("To switch MongoDB databases, a new database name must be specified", 500);
+		$this->dbname = $database;
+		try {
+			$this->db = $this->connection->{$this->dbname};
+			return(TRUE);
+		} catch(Exception $e) {
+			show_error("Unable to switch Mongo Databases: {$e->getMessage()}", 500);
+		}
+	}
+	
+	/**
+	 *	--------------------------------------------------------------------------------
 	 *	SELECT FIELDS
 	 *	--------------------------------------------------------------------------------
 	 *
@@ -381,7 +401,16 @@ class Mongo_db {
 	 		show_error("In order to retreive documents from MongoDB, a collection name must be passed", 500);
 	 	$results = array();
 	 	$documents = $this->db->{$collection}->find($this->wheres, $this->selects)->limit((int) $this->limit)->skip((int) $this->offset)->sort($this->sorts);
-	 	return(iterator_to_array($documents));
+	 	
+	 	$returns = array();
+	 	
+	 	foreach($documents as $doc):
+	 		$returns[] = $doc;
+	 	endforeach;
+	 	
+	 	return($documents);
+	 	
+	 	//return(iterator_to_array($documents));
 	 }
 	 
 	/**
@@ -420,7 +449,10 @@ class Mongo_db {
 	 	
 	 	try {
 	 		$this->db->{$collection}->insert($insert, array('safe' => TRUE));
-	 		return(TRUE);
+	 		if(isset($insert['_id']))
+	 			return($insert['_id']);
+	 		else
+	 			return(FALSE);
 	 	} catch(MongoCursorException $e) {
 	 		show_error("Insert of data into MongoDB failed: {$e->getMessage()}", 500);
 	 	}

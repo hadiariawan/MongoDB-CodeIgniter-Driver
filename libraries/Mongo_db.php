@@ -409,7 +409,7 @@ class Mongo_db {
 	 		$returns[] = $doc;
 	 	endforeach;
 	 	
-	 	return($documents);
+	 	return($returns);
 	 	
 	 	//return(iterator_to_array($documents));
 	 }

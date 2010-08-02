@@ -67,6 +67,7 @@ class Mongo_db {
 	public function switch_db($database = '') {
 		if(empty($database)):
 			show_error("To switch MongoDB databases, a new database name must be specified", 500);
+		endif;
 		$this->dbname = $database;
 		try {
 			$this->db = $this->connection->{$this->dbname};

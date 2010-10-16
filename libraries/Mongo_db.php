@@ -704,7 +704,7 @@ class Mongo_db {
 		endif;
 		
 		if(!empty($this->user) && !empty($this->pass)):
-			$conn_string .= "{$this->user}:{$this->pass}@";
+			$connection_string .= "{$this->user}:{$this->pass}@";
 		endif;
 		
 		if(isset($this->port) && !empty($this->port)):

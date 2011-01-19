@@ -767,6 +767,25 @@ class Mongo_db
 	 	}
 	 	return($this->db->{$collection}->getIndexInfo());
 	}
+	
+	/**
+	 *	--------------------------------------------------------------------------------
+	 *	DROP COLLECTION
+	 *	--------------------------------------------------------------------------------
+	 *
+	 *	Removes the specified collection from the database.  Be careful because this
+	 *  can have some very large issues in production!
+	 */
+	 
+	 public function drop_collection($collection = "")
+	 {
+	   if(empty($collection))
+		 {
+	     show_error("No Mongo collection specified to drop from database", 500);
+	   }
+	   $this->db->{$collection}->drop();
+	   return TRUE;
+	 }
 	 
 
 	/**

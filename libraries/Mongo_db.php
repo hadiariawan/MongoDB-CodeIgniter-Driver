@@ -508,7 +508,7 @@ class Mongo_db
 	 	
 	 	try
 	 	{
-	 		$this->db->{$collection}->insert($data, array('safe' => TRUE));
+	 		$this->db->{$collection}->insert($data, array('fsync' => TRUE));
 	 		if(isset($insert['_id']))
 	 			return($insert['_id']);
 	 		else
@@ -545,7 +545,7 @@ class Mongo_db
 	 	
 	 	try
 	 	{
-	 		$this->db->{$collection}->update($this->wheres, array('$set' => $data), array('safe' => TRUE, 'multiple' => FALSE));
+	 		$this->db->{$collection}->update($this->wheres, array('$set' => $data), array('fsync' => TRUE, 'multiple' => FALSE));
 	 		return(TRUE);
 	 	} 
 	 	catch(MongoCursorException $e)
@@ -578,7 +578,7 @@ class Mongo_db
 	 	
 	 	try
 	 	{
-	 		$this->db->{$collection}->update($this->wheres, array('$set' => $data), array('safe' => TRUE, 'multiple' => TRUE));
+	 		$this->db->{$collection}->update($this->wheres, array('$set' => $data), array('fsync' => TRUE, 'multiple' => TRUE));
 	 		return(TRUE);
 	 	} 
 	 	catch(MongoCursorException $e)
@@ -607,7 +607,7 @@ class Mongo_db
 	 	
 	 	try
 	 	{
-	 		$this->db->{$collection}->remove($this->wheres, array('safe' => TRUE, 'justOne' => TRUE));
+	 		$this->db->{$collection}->remove($this->wheres, array('fsync' => TRUE, 'justOne' => TRUE));
 	 		return(TRUE);
 	 	}
 	 	catch(MongoCursorException $e)
@@ -636,7 +636,7 @@ class Mongo_db
 	 	
 	 	try
 	 	{
-	 		$this->db->{$collection}->remove($this->wheres, array('safe' => TRUE, 'justOne' => FALSE));
+	 		$this->db->{$collection}->remove($this->wheres, array('fsync' => TRUE, 'justOne' => FALSE));
 	 		return(TRUE);
 	 	}
 	 	catch(MongoCursorException $e)

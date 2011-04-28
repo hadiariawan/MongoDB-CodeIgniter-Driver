@@ -863,6 +863,8 @@ class Mongo_db
 		{
 			$connection_string .= "{$this->host}";
 		}
+
+                $connection_string .= "/" . $this->dbname;
 		
 		$this->connection_string = trim($connection_string);
 	}

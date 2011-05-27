@@ -786,7 +786,22 @@ class Mongo_db
 	   $this->db->{$collection}->drop();
 	   return TRUE;
 	 }
-	 
+
+
+	 /**
+	 *	--------------------------------------------------------------------------------
+	 *	SET SLAVE OKAY
+	 *	--------------------------------------------------------------------------------
+	 *
+	 *	Change slaveOkay setting for this database
+	 *	
+	 */
+	
+	public function set_slave_okay($boolean) {
+		
+		$this->db->setSlaveOkay($boolean);
+		return($this);	
+	}
 
 	/**
 	 *	--------------------------------------------------------------------------------

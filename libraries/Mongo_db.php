@@ -520,6 +520,41 @@ class Mongo_db
 	 	}
 	 	
 	 }
+
+         /**
+	 *	--------------------------------------------------------------------------------
+	 *	SAVE
+	 *	--------------------------------------------------------------------------------
+	 *
+	 *	If the object is from the database, update the existing database object, otherwise insert this object. 
+	 *
+	 *	@usage = $this->mongo_db->save('foo', $data = array());
+	 */
+	
+	 public function save($collection = "", $data = array())
+	 {
+	 	if(empty($collection))
+	 	{
+	 		show_error("No Mongo collection selected to update", 500);
+	 	}
+	 	
+	 	if(count($data) == 0 || !is_array($data))
+	 	{
+	 		show_error("Nothing to update in Mongo collection or update is not an array", 500);
+	  }
+	 	
+	 	try
+	 	{
+	 		$this->db->{$collection}->save($data);
+	 		return(TRUE);
+	 	} 
+	 	catch(MongoCursorException $e)
+	 	{
+	 		show_error("Update of data into MongoDB failed: {$e->getMessage()}", 500);
+	 	}
+	 	
+	 }
+
 	 
 	/**
 	 *	--------------------------------------------------------------------------------

@@ -1,24 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * CodeIgniter MongoDB Active Record Library
- *
- * A library to interface with the NoSQL database MongoDB. For more information see http://www.mongodb.org
- * Originally created by Alex Bilbie, but extended and updated by Kyle J. Dye
- *
- * @package		CodeIgniter
- * @author		Kyle J. Dye | www.kyledye.com | kyle@kyledye.com
- * @copyright	Copyright (c) 2010, Kyle J. Dye.
- * @license		http://codeigniter.com/user_guide/license.html
- * @link		http://kyledye.com
- * @version		Version 0.3
- */
-
 class Mongo_db 
 {
 	
 	private $CI;
-	private $config_file = 'mongo_db';
+	private $config_file = 'config_mongodb';
 	
 	private $connection;
 	private $db;
@@ -520,8 +506,8 @@ class Mongo_db
 	 	}
 	 	
 	 }
-
-         /**
+	 
+	 /**
 	 *	--------------------------------------------------------------------------------
 	 *	SAVE
 	 *	--------------------------------------------------------------------------------
@@ -554,7 +540,6 @@ class Mongo_db
 	 	}
 	 	
 	 }
-
 	 
 	/**
 	 *	--------------------------------------------------------------------------------
@@ -821,21 +806,7 @@ class Mongo_db
 	   $this->db->{$collection}->drop();
 	   return TRUE;
 	 }
-
-	 /**
-	 *	--------------------------------------------------------------------------------
-	 *	SET SLAVE OKAY
-	 *	--------------------------------------------------------------------------------
-	 *
-	 *	Change slaveOkay setting for this database
-	 *	
-	 */
-	
-	public function set_slave_okay($boolean) {
-		
-		$this->db->setSlaveOkay($boolean);
-		return($this);	
-	}
+	 
 
 	/**
 	 *	--------------------------------------------------------------------------------
@@ -863,8 +834,14 @@ class Mongo_db
 		} 
 		catch(MongoConnectionException $e)
 		{
-			show_error("Unable to connect to MongoDB: {$e->getMessage()}", 500);
+			//show_error("Unable to connect to MongoDB: {$e->getMessage()}", 500);
+			return $e;
 		}
+	}
+	
+	function is_connected()
+	{
+		return $this->connection;
 	}
 	
 	/**
@@ -913,7 +890,9 @@ class Mongo_db
 			$connection_string .= "{$this->host}";
 		}
 		
-		$this->connection_string = trim($connection_string);
+        $connection_string .= "/" . $this->dbname;
+        
+		$this->connection_string = trim($connection_string);        
 	}
 	
 	/**
